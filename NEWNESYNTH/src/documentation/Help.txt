@@ -1,0 +1,102 @@
+NESynth - The functional homemade General MIDI synthesizer. Version 1.0
+
+This program is a working synthesizer that can play up to four MIDI sequences simultaneously.
+
+[SECTION 1] The Main Interface
+
+When the program is launched, there are three main points of interest. These are the menu bar, the pannels to either side of the central image and the central image itself. This section describes the central image and how the user interacts with it.
+
+There are some keys bound by default to various keystrokes on the keyboard at initialization that correspond to different notes. Each of these keys are able to be rebound in the File menu under "Rebind Keys". Do note this will unbind all currently bound keys. This will be discussed more in [SECTION 3].
+
+Q, W, E, R and T correspond to the lowest keys available to be played on the "Left" keyboard, the contents of which are at the top of the image displayed at runtime. Conversely, Y, U, I, O and P correspond to some of the lowest keys available to be played on the "Right" keyboard, the contents of which are at the bottom of the image displayed at runtime. Depending on the model keyboard you use, some of these keys may or may not generate sound when held together due to the way the keyboard detects input, so results may vary. In addition to this, sound quality may also vary depending on the sound driver inside your system as well.
+
+A, S, D and F correspond to the General MIDI standard drum map keys of 36 (Bass Drum 1), 38 (Accoustic Snare), 44 (Hi-hat) and 49 (Crash Cymbal 1) respectively, played out on the dedicated percussion channel. These correspond to the green keys on the upper left of the "Left" keyboard
+
+G, H, J and K correspond to the General MIDI standard drum map keys of 37 (Side Stick), 41 (Low Floor Tom), 48 (Hi-Mid Tom) and 55 (Splash Cymbal) respectively, played out on the dedicated percussion channel. These can be overridden to play notes on different channels in a process which will be described in [SECTION 2]. These keys correspond to the yellow hexagons to the right of the green keys on the "Left" keyboard
+
+1, 3, 4, 5, 6, 7, 8, 9 and 0 in addition to the minus (-), plus (+) and backspace (<-) keys all correspond to specific actions that affect the way the channels play back their notes. Each key corresponds to a specific action and each varies drastically in use. Some of these will have different impacts upon the sound based upon the sound driver inside your system, most notably pitch. 2 has no effect currently but may be implemented in a future version of the program
+
+1  : This key will halt all sound coming from the synthesizer immediately. A side effect of this is that it will replace the currently loaded soundfont with the default soundfont included on the soundcard. Instructions on loading soundfonts can be found in [SECTION 3]. This will also set the synthesizer into a mode where it will not read any more inputs until it is pressed a second time to resume normal operation.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V 1.0
+     This key corresponds to the "Power" key on the "right" keyboard.
+
+3  : This key will reset all modified states of the current notes being played to default, such as volume, modwheel and pitch bending, and instrumentation across every channel.
+     BUG:The reset of instrumentation on a sequence channel will not carry into the next time one loops.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the "Reset" key on the "right" keyboad.
+
+4  : This key will decrease the volume across all channels by a factor of 8 every 30 milliseconds it is pressed down.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the Purple Down Arrow Key present on both "left" and "right" keyboards.
+
+5  : This key will increase the volume across all channels by a factor of 8 every 30 milliseconds it is pressed down.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the Purple Up Arrow Key present on both "left" and "right" keyboards.
+
+6  : This key will reset the volume across all channels to the default value when the NESynth is executed (100).
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the leftmost red key on both "left" and "right" keyboards.
+
+7  : This key will decrease the modwheel bend across all channels by a factor of 8 every 30 milliseconds it is pressed down.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the down arrow on the directional pad on both "left" and "right" keyboards.
+
+8  : This key will increase the modwheel bend across all channels by a factor of 8 every 30 milliseconds it is pressed down.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the up arrow on the directional pad on both "left" and "right" keyboards.
+
+9  : This key will reset the modwheel bend across all channels to the default value when the NESynth is executed (0).
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the rectangle to the upper-left of the directional pad on both "left" and "right" keyboards.
+
+0  : This key will toggle sustain mode onto all channels, where sound will sustain if it has been designed to. Some sounds do not play nice with this effect, while others do.
+     This cannot be changed due to the way MIDI handles sampled instruments and must be accounted for when trying to use it.
+     This key corresponds to the rightmost red key on both "left" and "right" keyboards.
+
+-  : This key will decrease the pitch bend across all channels by a factor of 128 every 30 milliseconds it is pressed down.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the left arrow on the directional pad on both "left" and "right" keyboards.
+
++  : This key will increase the pitch bend across all channels by a factor of 128 every 30 milliseconds it is pressed down.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the right arrow on the directional pad on both "left" and "right" keyboards.
+
+<- : This key will reset the pitch bend across all channels to the default value when the NESynth is executed (0). Internally, it is reset to 8192, the middle value bound by the integer representing the state of pitch bend.
+     BUG: Currently, this has some issues with the channel displays present in [SECTION 2] and will not properly update them as of V1.0
+     This key corresponds to the rectangle to the upper-right of the directional pad on both "left" and "right" keyboards.
+(This is the backspace key)
+
+In addition to this, there are four additional actions bound to keys, these ones are located on the numberpad by default. Their purpose is to increase or decrease the octaves sounding on the "main keyboard". NumberPads 7 and 1 correspond to the "left" keyboard's blue keys, while Numberpads 9 and 3 correspond to the "right" keyboard's blue keys. For these keys to work, Numberlock must be engaged. Each pair raises or lowers the octave by one value respectively. If your keyboard does not have a numberpad these keys will need to be rebound [SECTION 3].
+
+Z, X, C and V correspond to the sequence channels, which are located between the purple volume buttons and the directional pad on the "right" keyboard. When held down, they activate a sequence that will loop as long as the key is pressed down. If the key is released before it is done looping, it will complete the loop and deactivate. It will not activate again as long as the loop is still playing and only will after the loop has finished.
+
+Interactions with the main panel are done through the mouse and the keyboard. Left clicking on a key on the "keyboard" portion of either side, that corresponding key will be bound to a different channel. The channel bound can be altered using the side interfaces described in [SECTION 2]. Left clicking and dragging over multiple keys will bind all keys provided the left mouse button is held down over the actual "keyboard" portion. As of 1.0, if it is released over a non-keyboard entity no channel binding will occur for any key. Right clicking on a key will allow the user to set a different value to be played on it that differs from the default value assigned. If no value is entered, or a non-integer is entered the value will be reset to the default value of the key.
+
+[SECTION 2] The Side Interfaces
+
+To either side of the main panel are options that can alter the way the notes are played on the keyboard. By clicking on one of the colored groups, that will select a channel in the MIDI to be altered. There are different modes that can be changed through use of the mousewheel and the left mouseclick. Clicking on the panel next to the channel number will reset the instrument on a given channel to the default, which is usually the Piano depending on the soundfont [SECTION 3] being used. Clicking on the numbers below "Vol", "Mod" and "Pitch" will reset their values to their default, and clicking on the OFF or ON below the "Mono" and "Solo" will toggle mono and solo mode respectfully on a given channel. Scrolling the mousewheel on the panel next to the channel number will change the instrument that will sound when the next note is played on that channel. Scrolling on the numbers below "Vol", "Mod" and "Pitch" will add or subtract value from the modifiers. Vol determines the loudness of a channel, while Mod determines the amount of modulation occuring in the pitch. Modulation is a similar effect to vibrato, but there is no true equivalent to fully describe it. Pitch determines the bending of the pitch on a given note, the larger the value the more it is bent in the positive (raising pitch) or negative (lowering pitch). When a given channel is selected, scrolling on a different channel will have no effect, and the currently selected channel will group notes to the given channel when interacting with the main panel as described in [SECTION 1]. In addition to this, there are two other panels which are different from the rest, the Percussion and Aux panels. On the percussion channel, there is no way to change the instrument as it is dedicated to the GM Percussion channel, however on the Aux panel, clicking on the "Not Overriding" label will switch the function of the auxiliary keys as described in [SECTION 1], allowing them to function as normal keyboard keys.
+
+[SECTION 3] The Menu Bar
+
+There are various functions within the menu bar that affect the way everything interacts with the keyboard and the user.
+
+In the file menu, there are four options, "Rebind Keys", "Set Soundfont", "Load Sequence", "Disable/Enable SafeMode", "Help", "Credits" and "Exit".
+
+Rebind Keys : This option will turn binding mode on. When in binding mode, press any key to bind it to the currently highlighted key on the main panel. Pressing the ESC key will skip this key, unless one key has already been skipped. In this case, it will turn binding mode off.
+
+Set Soundfont : This option will allow the user to load a new soundfont into the Synthesizer. If no soundfont is selected, no action will happen. If the file cannot be properly converted, an error will occur.
+
+Load Sequence : This option will allow the user to load a new sequence to be played from a MIDI file into the program. Currently, only SINGLE INSTRUMENT midi files are supported as of V 1.0. When used, it will prompt which sequence to load onto, with 1, 2, 3 and 4 corresponding to Z, X, C and V respectively. If no sequence is chosen, nothing will happen. If a sequence is chosen, the user will be prompted to select the file to load. If no file is chosen, nothing will happen, and if a file is chosen it will be loaded into the given sequence as long as there are no errors in converting the file.
+
+Disable/Enable SafeMode : This option will allow the user to disable (or re-enable) the cap on the pitch of a given note to potentially harmful and/or annoying frequencies. This option is enabled by default. Trying to play a note at a pitch deemed "unsafe" will not allow the note to sound and a message will pop up informing the user of the danger of such a pitch when enabled. When disabled, no such warning message will occur.
+
+Help : Displays the help for the program, which you are currently reading! Should be self-explanatory.
+
+Credits : Displays the credits for the program, which credits all the assistance that was received during the creation of the program, should be self explanatory much like before.
+
+Exit : Ends operation of the program, again should be self-explanatory.
+
+
+[CLOSER]
+
+You have reached the end of the help file. What you do with this program is now entirely in your hands. Enjoy!
