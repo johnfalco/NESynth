@@ -1,0 +1,47 @@
+ALL HEIGHT = 29
+
+BLUE ROW #1
+G1: W=29, x=76 , y=27
+G2:       x=139, y=27, x+=32, 3 times
+G3:       x=279, y=27, x+=32, 3 times
+G4:       x=417, y=27, x+=32, 3 times
+
+
+BLUE ROW #2
+W=29, x=76 , y=73
+x+=32, 12 times
+lblue:  W=60 , x=479, y=73
+
+green:  W=46 , x=76 , y=104
+BLUE ROW #3
+W=29, x=124, y=104
+x+=32, 11 times
+dblue:  W=44 , x=495, y=104
+
+
+yellow: W=53 , x=76 , y=135
+BLUE ROW #4
+W=29, x=131, y=135
+x += 32, 10 times
+purple: W=67 , x=472, y=135
+
+
+orange: W=69 , x=76 , y=166
+BLUE ROW #5
+W=29, x=147, y=166
+x += 32, 9 times 
+lpurpl: W=82 , x=457, y=166
+
+
+
+red:    W=35 , x=97 , y=197
+               x=+38, y=197
+               x=+38, y=197
+white:  W=204, x=187, y=197
+red2:   W=35 , x=393, y=197
+               x=+38, y=197
+               x=+38, y=197
+               x=+38, y=197
+
+
+195,195,195

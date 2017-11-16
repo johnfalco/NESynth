@@ -1,0 +1,32 @@
+!REVISE
+This program has had numerous steps along the way to creating the product which you now see today. Most of it was hand-coded, but there are numerous parts of code that were adapted from other's examples found over websites such as stackoverflow, coderanch and some java-oriented blogs.
+!REVISE
+
+The big elephant in the room when it comes to the biggest contribution had to have been an article written by Rob Camick about how to use Key Bindings in Swing, a concept I had no idea existed and was amazed by. It was a topic discussed far less than the AWT solution of a KeyListener, which cannot read multiple inputs at once. However, by extending the AbstractAction class, it is possible to bind keys to actions on the input and action map of a given JComponent within Swing. This, in conjunction with a timer and map to track currently pressed keys, is the only reason why this program works the way it needs to.
+https://tips4java.wordpress.com/2013/06/09/motion-using-the-keyboard/
+
+The second largest contribution, which was adapted based off of code by Sami Koivu of StackOverflow, is reading MIDI files and obtaining the messages passed to the synthesizer. This program does not read MIDI traditionally, it converts the file into a readable list of notes and tempo-based ticks in order to simulate actual playback on a given channel. This allows multiple sequences to be played at once. Without this code, it would have been impossible to run more than one sequence through the program at any given time and each one would have had to be loaded individually as they were needed.
+https://stackoverflow.com/questions/3850688/reading-midi-files-in-java/3850885#3850885
+
+The smallest contribution, but by no means the least important, was a method to scale a buffered image as fast as possible without any external libraries. This is because the "imgscalr" library always led me to either a 404 link or a virus page, and this solution was simple, clean and effective. And it sure is fast. This method may or may not be used in the final product, but I felt it important to give credit to a truly fantastic and optimized 12 lines of raw power.
+https://stackoverflow.com/questions/16497853/scale-a-bufferedimage-the-fastest-and-easiest-way/33825521#33825521
+
+!REVISE
+Everything else in here is hand-written with assistance from an uncountable number of sources as well as the javadocs pertaining to both the javax.midi and javax.swing packages. The idea of seperating out parts into individual classes that communicate through static instances instead of nested classes was partially inspired by an answer to a stackoverflow question that I have lost the link for, but otherwise the code is written without any other assistance.
+!REVISE
+
+For the Custom soundfont, most of it is based off of "8bitSF", which was previously known as "The Nes Soundfont" designed by TheEighthBit which was uploaded to https://musical-artifacts.com/artifacts/23 on July 29th, 2015. I redid most of the names and instruments, but all the samples within that are from the NES were using their samples. The original author had previously discontinued their work on the project as of April 19th, 2017, and had requested that anyone wishing to utilize his creation in their own to credit him. Without these samples, one of the main goals of the NESynth would have been impossible, as the namesake of the application is based off the premise of simulating 8-bit hardware.
+
+The program used to edit these soundfonts together is known as "Viena for Windows", version 0.999, located at http://www.synthfont.com/Viena_news.html and http://www.synthfont.com/Downloads.html. With it, I was able to rename and reconfigure most of the 8bitSF file into something the program would be able to more easily understand.
+
+Other samples from other sources were obtained through recordings done by myself, but all original authors of these samples retain their respective copyright and my eternal gratitude for their creation. Use of these samples falls under Fair Use as Non-profit and scholarship, as this is being created as a project for Olivet Nazarine University and is protected under Fair Use provisions.
+
+This project would of course not been possible if MIDI was never established or created if it were not for MIDI, the universal standard for Musical Instrument Digital Interface's public launch in 1983. While it may not be perfect, and it certainly isn't, it's universality has been enough to
+
+In addition to crediting places where I was able to obtain the assistance to build this program the way I wanted to, I also wanted to thank Dr. Bareiss, Dr. Vail and Prof. Devine of the CS Department and Dr. Reddick of the Music Department. Without their guidance, instruction and support over these four years I have spent here at Olivet Nazarene University, I would not be where I am today.
+
+!REVISE
+I would also like to thank the person who helped me do a realistic user interface that looked professional
+!REVISE
+
+Finally, I would like to thank you, the user taking their time to look through this entire file, whether it be through the program or not, for receiving my code, testing it and enjoying it in whatever way you see fit.
