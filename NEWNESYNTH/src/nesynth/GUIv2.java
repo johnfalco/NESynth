@@ -77,8 +77,12 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
 
 /** Constructs the GUIDisplay
   */
-    public GUIv2() {
-        this.guiKeyPositionList = new KeyPositionList('B');
+    public GUIv2(char bnk) {
+    	this(bnk, 1);
+    }
+
+    public GUIv2(char bnk, int synthKind) {
+        this.guiKeyPositionList = new KeyPositionList(bnk);
         this.guiLoader =
             new JFileChooser(new File(System.getProperty("user.dir")));
         this.setSize(SIZE[0], SIZE[1]);
@@ -87,7 +91,10 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
         this.guiFaceTwo = new GUIFacePanelV2(1, this);
         this.add(this.guiFaceTwo, BorderLayout.CENTER);
         this.guiFaceTwo.setPreferredSize(new Dimension(625, 616));
-        guiSynth = new SynthOne(this.guiFaceTwo, 30);
+        if (synthKind == 2) 
+        	guiSynth = new SynthTwo(this.guiFaceTwo, 30);
+        else
+        	guiSynth = new SynthOne(this.guiFaceTwo, 30);
         this.guiLeftSidePanel = new GUISidePanel(2, 10, this);
         this.add(this.guiLeftSidePanel, BorderLayout.WEST);
         this.guiLeftSidePanel.setPreferredSize(new Dimension(204, 700));
@@ -106,7 +113,6 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
 //         this.guiFaceTwo.addKeyListener(guiNoteListen);
 //         this.addKeyListener(guiNoteListen);
     }
-
 /** Returns the Synth associated with this UI object
   * @return The associated Synth
   */

@@ -18,10 +18,6 @@ package nesynth;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import java.util.*;
-import java.io.*;
-import java.awt.image.*;
-import java.awt.geom.*;
 
 public class GUISidePanel extends SynthPanelUI implements ActionListener {
 /** Used to accomidate the way Swing handles painting passively */

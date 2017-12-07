@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static nesynth.SynthConstants.*;
 

@@ -13,9 +13,7 @@
 package nesynth;
 
 import java.awt.*;
-import java.awt.image.*;
 import javax.swing.*;
-import java.util.Arrays;
 
 public class GUILabel extends JLabel implements Comparable {
 

@@ -14,11 +14,17 @@ package nesynth;
 
 import javax.swing.*;
 import java.awt.event.*;
+
+import static nesynth.KeyConstants.SEQ;
+import static nesynth.KeyConstants.getBankString;
+import static nesynth.SynthConstants.SEQACHAN;
+import static nesynth.SynthConstants.SEQBCHAN;
+import static nesynth.SynthConstants.SEQCCHAN;
+import static nesynth.SynthConstants.SEQDCHAN;
+
 import java.awt.*;
 import java.util.*;
-import java.io.*;
 import java.awt.image.*;
-import java.awt.geom.*;
 
 public class GUIFacePanelV2 extends SynthPanelUI implements ActionListener {
  
@@ -159,7 +165,9 @@ public class GUIFacePanelV2 extends SynthPanelUI implements ActionListener {
     public void paintMusic() {
         System.err.println("PAINTMUSIC CALLED");
         ImageIcon imageIcon = 
-            new ImageIcon(KeyConstants.getBankString('B')+"keyboardBase.png");
+            new ImageIcon(KeyConstants.getBankString(
+            		guifpParent.getKeyPositionList().getImageBank())
+            									+ "keyboardBase.png");
         
         Image tmpImage = imageIcon.getImage();
     
@@ -194,6 +202,9 @@ public class GUIFacePanelV2 extends SynthPanelUI implements ActionListener {
             g2d.drawImage(paint, temp.getPaintingXCoord(), 
                         temp.getPaintingYCoord(), paint.getWidth(), 
                                            paint.getHeight(), null);
+            g2d.drawImage(temp.getImageBorder(), temp.getPaintingXCoord(), 
+                    temp.getPaintingYCoord(), paint.getWidth(), 
+                    paint.getHeight(), null);
             temp = (KeyPosition)guifpParent.getKeyPositionList().getNext();
         } while (temp != null);
         
@@ -231,7 +242,7 @@ public class GUIFacePanelV2 extends SynthPanelUI implements ActionListener {
         BufferedImage addText = (addTheText) //(kp.displaysText() == true) 
             ? addText(temp, kp.convertKeyText())
             : temp;
-        
+
         guifpPaintList.add(new LocationStore(addText, paintCoord[X],
                                                    paintCoord[Y]));
     }
@@ -271,7 +282,8 @@ public class GUIFacePanelV2 extends SynthPanelUI implements ActionListener {
         private final int REBIND = -2;
     /** Used to determine if regrouping a key */
         private final int REGROUP = -1;
-    
+
+        private volatile boolean[] sequenceOn = new boolean[4];
     /** Constructs the Listener
       */
         public GUINoteListener() {
@@ -556,7 +568,7 @@ public class GUIFacePanelV2 extends SynthPanelUI implements ActionListener {
     /** Handles KeyEvents, used for binding keys when in binding mode
       * @param e KeyEvent being handled
       */
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(KeyEvent e) {      	 
 //             if (binding == true) {
 //                 int keyCode = e.getKeyCode();
 //                 //Key to bind previous key to

@@ -20,7 +20,6 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
 
 import static nesynth.SynthConstants.*;
 
@@ -198,7 +197,7 @@ public class SynthOne extends AbstractSynth implements ActionListener {
   */
     private void handleEvent(String key, SynthType type, boolean isOn) {
         //SynthType is SynthSys
-        if (type instanceof SynthSys) {
+        if (type instanceof SynthSys || !(type instanceof SynthNull)) {
             SynthSys ss = (SynthSys)type;
             if (isOn == false) {
                 soSynSysPressed.remove(key);

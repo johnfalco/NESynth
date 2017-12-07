@@ -31,9 +31,13 @@ public class NESynth {
             endProgram("Too many args passed");
         } else {
             if (args[0].equals("Original")) {
-                GUIDisplay initial = new GUIDisplay();
+                new GUIDisplay();
             } else if (args[0].equals("Revised")) {
-                GUIv2 revised = new GUIv2();
+                new GUIv2('B');
+            } else if (args[0].equals("Full")) {
+            	new GUIv2('C');
+            } else if (args[0].equals("Revised+")) {
+            	new GUIv2('B', 2);
             } else {
                 endProgram("Bad args passed");
             }
@@ -47,7 +51,7 @@ public class NESynth {
                          + "I'll run it anyway though :)");
             //TEST
             System.err.println("RUNNING NEW MERCY :3");
-            GUIv2 newMercy = new GUIv2();
+            GUIv2 newMercy = new GUIv2('B', 2);
             //TEST        
         //GUIDisplay mercy = new GUIDisplay();
         

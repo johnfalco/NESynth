@@ -373,10 +373,6 @@ public class KeyPosition implements Comparable, Serializable {
 //         System.err.println("Loading " + filename);
         ImageIcon imageIcon =
             new ImageIcon(getBankString(this.kpBank) + filename);
-
-
-        
-        
         Image tmpImage = imageIcon.getImage();
     
         BufferedImage image = new BufferedImage(imageIcon.getIconWidth(),
@@ -384,15 +380,16 @@ public class KeyPosition implements Comparable, Serializable {
         image.getGraphics().drawImage(tmpImage, 0, 0, null);
         tmpImage.flush();
 
-//         BufferedImage scale = null; 
-//         
-//         if (this.kpSynthType instanceof ScaledNote
-//          || this.kpSynthType instanceof ScaledSynthSys
-//          || this.kpSynthType instanceof ScaledSequence) {
-        int[] scaledSize = getPaintingSize();
-        BufferedImage scale = scale(image, scaledSize[0], scaledSize[1]);
-//         } else
-//             scale = image;
+        BufferedImage scale = null; 
+        
+        if (this.kpSynthType instanceof ScaledSynthNull
+         || this.kpSynthType instanceof ScaledNote
+         || this.kpSynthType instanceof ScaledSynthSys
+         || this.kpSynthType instanceof ScaledSequence) {
+            int[] scaledSize = getPaintingSize();
+            scale = scale(image, scaledSize[0], scaledSize[1]);
+        } else
+            scale = image;
     
 //         if (this.kpDispText == true)
 //             return addText(scale, convertKeyText(this.kpKeyCode));
@@ -664,6 +661,10 @@ public class KeyPosition implements Comparable, Serializable {
         if (this.kpHImage == null || override == true)
             this.kpHImage = handleString(generateString(false, this.kpBank,
                                            this.kpType, this.kpSynthType));
+    }
+    
+    public BufferedImage getImageBorder() {
+    	return handleString("BORDER.png");
     }
 
 /** Returns the image representing the group assigned to the KeyPosition

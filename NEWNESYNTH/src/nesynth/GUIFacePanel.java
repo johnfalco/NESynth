@@ -16,9 +16,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
-import java.io.*;
 import java.awt.image.*;
-import java.awt.geom.*;
 
 public class GUIFacePanel extends SynthPanelUI implements ActionListener {
  

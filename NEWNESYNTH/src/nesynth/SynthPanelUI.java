@@ -68,9 +68,9 @@ public abstract class SynthPanelUI extends JPanel implements Comparable, SynthUI
         FontMetrics fm = g2d.getFontMetrics();
         int xC = old.getWidth()/2;
         int yC = old.getHeight()/2;
-        g2d.setPaint(determineColorByCoordinate(old, xC, yC));
         int xS = 0 + ((old.getWidth()-fm.stringWidth(text))/2);
         int yS = 0 + ((old.getHeight()-fm.getHeight())/2) + fm.getAscent();
+        g2d.setPaint(determineColorByCoordinate(old, xS, yS));
         g2d.drawString(text, xS, yS);
         g2d.dispose();
         return img;
@@ -85,6 +85,7 @@ public abstract class SynthPanelUI extends JPanel implements Comparable, SynthUI
         int b = base & 0x000000ff;
 //luminance data based off of https://goo.gl/YNXQMY
         double luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        System.err.println("Luminance: " + luminance);
         return (luminance > 0.179) ? Color.black : Color.white;  
     }
 
