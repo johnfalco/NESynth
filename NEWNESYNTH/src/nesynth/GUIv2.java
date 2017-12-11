@@ -334,6 +334,7 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
         int storeValue = 0;
         String one = "1", two = "2", thr = "3", fou = "4";
         Object[] choice = {one, two, thr, fou};
+        int[] sequenceKeycodes = this.guiKeyPositionList.getSequenceKeycodes();
         String useDefault = (String)JOptionPane.showInputDialog(
             null, "WARNING: This will reset the sequence's to default value!"
                 + "\nWhich sequence to load into?", "Sequence Number",
@@ -342,22 +343,22 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
             switch(useDefault.charAt(0)) {
                 case '1':
                     channel = SynthConstants.SEQACHAN;
-                    keyCode = KeyEvent.VK_Z;
+                    keyCode = sequenceKeycodes[0];
                     storeValue = 0;
                     break;
                 case '2':
                     channel = SynthConstants.SEQBCHAN;
-                    keyCode = KeyEvent.VK_X;
+                    keyCode = sequenceKeycodes[1];
                     storeValue = 1;
                     break;
                 case '3':
                     channel = SynthConstants.SEQCCHAN;
-                    keyCode = KeyEvent.VK_C;
+                    keyCode = sequenceKeycodes[2];
                     storeValue = 2;
                     break;
                 case '4':
                     channel = SynthConstants.SEQDCHAN;
-                    keyCode = KeyEvent.VK_V;
+                    keyCode = sequenceKeycodes[3];
                     storeValue = 3;
                     break;
                 default:

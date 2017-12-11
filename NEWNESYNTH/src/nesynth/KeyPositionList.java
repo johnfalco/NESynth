@@ -1078,6 +1078,20 @@ public class KeyPositionList extends SortedList {
         }
     }
 
+    public int[] getSequenceKeycodes() {
+    	int[] sequenceInts = new int[4];
+    	int i = 0;
+    	KeyPosition temp = getNext();
+    	while(temp != null) {
+    		if (temp.getSynthType() instanceof Sequence) {
+    			sequenceInts[i] = temp.getKeyCode();
+    			i++;
+    		}
+    		temp = getNext();
+    	}
+    	return sequenceInts;
+    }
+    
 /** Gets next KeyPosition object. If the end of the list is reached,
   * this method returns a null to signify the end of finding in other classes
   * @return Next KeyPosition, unless end of list, in which case null is gotten

@@ -114,7 +114,7 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
   * @param type SynthType to be associated to the action
   */
     public void addAction(int keyCode, SynthType type) {
-        if (keyCode == KeyEvent.VK_UNDEFINED || type == null) {
+        if (keyCode == KeyEvent.VK_UNDEFINED || type == null || type instanceof SynthNull) {
 //             System.err.println("Not adding undefined key!");
             return;
         }
