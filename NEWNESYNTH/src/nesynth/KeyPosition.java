@@ -534,6 +534,8 @@ public class KeyPosition implements Comparable, Serializable {
                 return "" + (char)0x007F;
             case KeyEvent.VK_ALT:
                 return "Alt";
+            case KeyEvent.VK_ENTER:
+            	return "Enter";
             default:
                 return "" + (char)this.kpKeyCode;
         }

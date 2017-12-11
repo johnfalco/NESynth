@@ -91,10 +91,12 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
         this.guiFaceTwo = new GUIFacePanelV2(1, this);
         this.add(this.guiFaceTwo, BorderLayout.CENTER);
         this.guiFaceTwo.setPreferredSize(new Dimension(625, 616));
-        if (synthKind == 2) 
+        if (synthKind == 2) {
         	guiSynth = new SynthTwo(this.guiFaceTwo, 30);
-        else
+        	guiSynth.setSoundbank(new File("soundfontData/globalsf.sf2"));
+        } else
         	guiSynth = new SynthOne(this.guiFaceTwo, 30);
+        new File("midiFilesData/MidiTest.mid");
         this.guiLeftSidePanel = new GUISidePanel(2, 10, this);
         this.add(this.guiLeftSidePanel, BorderLayout.WEST);
         this.guiLeftSidePanel.setPreferredSize(new Dimension(204, 700));
@@ -577,7 +579,7 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
                 JScrollPane helpView = new JScrollPane(help);
                 helpView.setHorizontalScrollBarPolicy(
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                JOptionPane.showMessageDialog(null, helpView, MENU[3],
+                JOptionPane.showMessageDialog(null, helpView, MENU[4],
                             JOptionPane.PLAIN_MESSAGE, null);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -597,7 +599,7 @@ public class GUIv2 extends JFrame implements GUIConstants, SynthFrameUI {
                 JScrollPane creditView = new JScrollPane(credits);
                 creditView.setHorizontalScrollBarPolicy(
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-                JOptionPane.showMessageDialog(null, creditView, MENU[4],
+                JOptionPane.showMessageDialog(null, creditView, MENU[5],
                             JOptionPane.PLAIN_MESSAGE, null);
             } catch (IOException ioe) {
                 ioe.printStackTrace();

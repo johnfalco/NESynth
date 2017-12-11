@@ -25,7 +25,11 @@ public interface SynthFrameUI extends SynthUI {
   * @param inButton SynthButton being acted upon
   */
     public void handleClick(SynthButton inButton);
-     
+
+/** Gets the KeyPositionList of the UI
+  * @return The KeyPositionList stored with the UI
+  */
+    public KeyPositionList getKeyPositionList();    
 /** Gets the center Panel of the UI
   * @return The center Panel UI
   */
@@ -40,8 +44,5 @@ public interface SynthFrameUI extends SynthUI {
   */     
     public SynthPanelUI getRightPanel();
     
-/** Gets the KeyPositionList of the UI
-  * @return The KeyPositionList stored with the UI
-  */
-    public KeyPositionList getKeyPositionList();
+
 }

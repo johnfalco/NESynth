@@ -15,7 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 
-public abstract class SynthPanelUI extends JPanel implements Comparable, SynthUI {
+public abstract class SynthPanelUI extends JPanel implements Comparable, SynthUI, PanelUI{
 /** Gets the PanelID for this Panel
   * @return The PanelID
   */
@@ -85,7 +85,6 @@ public abstract class SynthPanelUI extends JPanel implements Comparable, SynthUI
         int b = base & 0x000000ff;
 //luminance data based off of https://goo.gl/YNXQMY
         double luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        System.err.println("Luminance: " + luminance);
         return (luminance > 0.179) ? Color.black : Color.white;  
     }
 

@@ -26,35 +26,35 @@ import static nesynth.SynthConstants.*;
 public class SynthTwo extends AbstractSynth implements ActionListener {
 /** Integer that holds the information regarding the delay
   * that this class can handle, which is set in construction */
-    private final int soDelay;
+    private final int stDelay;
 
 /** HashMap for holding data on pressed system keys */
-    private final Map<String, SynthSys> soSynSysPressed =
+    private final Map<String, SynthSys> stSynSysPressed =
                             new HashMap<String, SynthSys>();
 /** HashMap for holding data on pressed sequence keys */
-    private final Map<String, Sequence> soSeqPressed =
+    private final Map<String, Sequence> stSeqPressed =
                             new HashMap<String, Sequence>();
 /** HashMap for holding data on pressed note keys */
-    private final Map<String, Note> soNotesPressed =
+    private final Map<String, Note> stNotesPressed =
                             new HashMap<String, Note>();
 
 /** Holds information regarding octave displacement for a given "left" note */
-    private int soLeftOct;
+    private int stLeftOct;
     
 /** Timer for timing system actions */
-    private Timer soSynthSysTimer;
+    private Timer stSynthSysTimer;
 /** Array of Specialized sequence timers that hold
   * sequence playback information as well as timer functionality */
-    private SequenceTimer[] soSeqTimers = new SequenceTimer[4];
+    private SequenceTimer[] stSeqTimers = new SequenceTimer[4];
 /** Timer for timing note actions */
-    private Timer soNoteTimer;
+    private Timer stNoteTimer;
 
 /** SortedList for active system actions */
-    private SortedList soCurrentSynSys = new SortedList(16);
+    private SortedList stCurrentSynSys = new SortedList(16);
 /** SortedList for active sequences */
-    private SortedList soCurrentSeqs = new SortedList(6);
+    private SortedList stCurrentSeqs = new SortedList(6);
 /** SortedList for active notes */
-    private SortedList soCurrentNotes = new SortedList(16);
+    private SortedList stCurrentNotes = new SortedList(16);
 
 /** Initialize the Synthesizer onto the component with the minimum delay
   * the current system can handle
@@ -68,19 +68,19 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
     public SynthTwo(JComponent c, int delay) {
         super(c);
       
-        soDelay = delay;
+        stDelay = delay;
         //Initializes the timers with the delay value and an initial delay of 0
-        this.soSynthSysTimer = new Timer(this.soDelay, this);
-        this.soSynthSysTimer.setInitialDelay(0);
-        for (int i = 0; i < this.soSeqTimers.length; i++) {
-            this.soSeqTimers[i] = new SequenceTimer(this.soDelay, this);
-            this.soSeqTimers[i].setInitialDelay(0);
+        this.stSynthSysTimer = new Timer(this.stDelay, this);
+        this.stSynthSysTimer.setInitialDelay(0);
+        for (int i = 0; i < this.stSeqTimers.length; i++) {
+            this.stSeqTimers[i] = new SequenceTimer(this.stDelay, this);
+            this.stSeqTimers[i].setInitialDelay(0);
         }
-        this.soNoteTimer = new Timer(this.soDelay, this);
-        this.soNoteTimer.setInitialDelay(0);
+        this.stNoteTimer = new Timer(this.stDelay, this);
+        this.stNoteTimer.setInitialDelay(0);
 
         //Initialize the displacement of the basic keyboard's octave settings
-        this.soLeftOct = 0;
+        this.stLeftOct = 0;
 
         System.err.println("SynthThread Initialized");
     }
@@ -197,14 +197,14 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
         if (type instanceof SynthSys) {
             SynthSys ss = (SynthSys)type;
             if (isOn == false) {
-                soSynSysPressed.remove(key);
-                boolean b = soCurrentSynSys.remove(ss);
+                stSynSysPressed.remove(key);
+                boolean b = stCurrentSynSys.remove(ss);
                 if (b) System.err.println("\n" + ss.toString() + " removed");
             } else
-                soSynSysPressed.put(key, ss);
+                stSynSysPressed.put(key, ss);
                 
-            if (soSynSysPressed.size() == 1) soSynthSysTimer.start();
-            if (soSynSysPressed.size() == 0) soSynthSysTimer.stop();
+            if (stSynSysPressed.size() == 1) stSynthSysTimer.start();
+            if (stSynSysPressed.size() == 0) stSynthSysTimer.stop();
         //SynthType is Sequence
         } else if (type instanceof Sequence) { 
         	System.err.println("TWO");
@@ -216,32 +216,32 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
 //                soSeqTimers[seq.getSeqChan()-11].stop();
 //            } else {
         	if (isOn != false) {
-	            if (soSeqPressed.containsKey(key)) {
-	                soSeqPressed.remove(key);
-	                boolean b = soCurrentSeqs.remove(seq);
+	            if (stSeqPressed.containsKey(key)) {
+	                stSeqPressed.remove(key);
+	                boolean b = stCurrentSeqs.remove(seq);
 	                if (b) System.err.println("\n" + seq.toString() + " removed");
-	                soSeqTimers[seq.getSeqChan()-11].stop();
+	                stSeqTimers[seq.getSeqChan()-11].stop();
 	            } else {
-	            	soSeqPressed.put(key, seq);
-	            	soSeqTimers[seq.getSeqChan()-11].setSequence(seq);
-	                soSeqTimers[seq.getSeqChan()-11].setDelay(seq.getSeqDur());
-	                soSeqTimers[seq.getSeqChan()-11].start();
+	            	stSeqPressed.put(key, seq);
+	            	stSeqTimers[seq.getSeqChan()-11].setSequence(seq);
+	                stSeqTimers[seq.getSeqChan()-11].setDelay(seq.getSeqDur());
+	                stSeqTimers[seq.getSeqChan()-11].start();
 	            }
         	}
         //SynthType is Note
         } else if (type instanceof Note) {
             Note note = (Note)type;
             if (isOn == false) {
-                soNotesPressed.remove(key);
-                boolean b = soCurrentNotes.remove(note);
+                stNotesPressed.remove(key);
+                boolean b = stCurrentNotes.remove(note);
                 if (b) 
                     System.err.println("\n" + note.toString() + " removed");
             } else {
-                soNotesPressed.put(key, note);
+                stNotesPressed.put(key, note);
             }
             
-            if (soNotesPressed.size() == 1) soNoteTimer.start();
-            if (soNotesPressed.size() == 0) soNoteTimer.stop();
+            if (stNotesPressed.size() == 1) stNoteTimer.start();
+            if (stNotesPressed.size() == 0) stNoteTimer.stop();
         //Unknown implementer of SynthType, error
         } else
             System.err.println("BAD TYPE RECEIVED BY HANDLEEVENT");
@@ -255,12 +255,12 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
         //Activation from a timer
         if (e.getSource() instanceof Timer) {
             Timer t = (Timer)e.getSource();
-            if (t.equals(soSynthSysTimer))
+            if (t.equals(stSynthSysTimer))
                 playSynthSysAction();
             else if (t instanceof SequenceTimer) {
                 SequenceTimer st = (SequenceTimer)t;
                 playSequence(st.getSequence());
-            } else if (t.equals(soNoteTimer))
+            } else if (t.equals(stNoteTimer))
                 playNotes();
         //Activation from a SynthButton
         } else if (e.getSource() instanceof SynthButton) {
@@ -275,7 +275,9 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
             System.err.println("BAD ACTIVATION RECEIVED BY ACTIONPERFORMED");
         }
         
-        doUpdatePanels(false);
+        if (stNotesPressed.size() == 0
+         && stSynSysPressed.size() == 0)
+        	doUpdatePanels(false);
     }
 
 /** Handles all updating of panels after an action has been performed
@@ -287,7 +289,7 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
     private void doUpdatePanels(boolean reset) {
         for(SynthPanelUI ui : asSynthPanels) {
             ui.updateDisplay(reset);
-//             System.err.println("UPDATED UI");
+               System.err.println("UPDATED UI");
         }
     }
 
@@ -296,33 +298,33 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
   */
     private synchronized void octaveLeftSet(int dOct) {
         if (dOct >= 13)
-            this.soLeftOct = 13;
+            this.stLeftOct = 13;
         else if (dOct <= -13)
-            this.soLeftOct = -13;
+            this.stLeftOct = -13;
         else
-            this.soLeftOct = dOct;
+            this.stLeftOct = dOct;
         Note temp;
-        soCurrentNotes.reset();
-        for (Object n : soCurrentNotes) {
+        stCurrentNotes.reset();
+        for (Object n : stCurrentNotes) {
         	temp = (Note)n;
             if (temp != null) {
                 if (temp.getOctS() == LEFTOCTAVE)
-                    soCurrentNotes.remove(temp);
+                    stCurrentNotes.remove(temp);
             }
         }
         
-        System.err.println("Left Octave = " + this.soLeftOct);
+        System.err.println("Left Octave = " + this.stLeftOct);
     }
 
 /** Activates whenever a synth system action is activated, handles
   * iterations and activations of the actions performed
   */
     protected void playSynthSysAction() {
-        for (SynthSys ss : soSynSysPressed.values()) {
+        for (SynthSys ss : stSynSysPressed.values()) {
             //Adjustable values not being set are not added to list and will
             //run on the cycle.  Every other value will iterate only once
             //and will not be called a second time
-            if(soCurrentSynSys.contains(ss))
+            if(stCurrentSynSys.contains(ss))
                 System.err.print("."); //If not iterating don't do anything
             else {
                 System.err.println("\nActivating " + ss.toString());
@@ -343,12 +345,12 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
         //Create the Sequence that will be referenced inside the thread
         final Sequence pSeq = s;
         //Check if sequence is in the current sequences
-        if (soCurrentSeqs.contains(pSeq) || checkIfRunning(pSeq)) {
+        if (stCurrentSeqs.contains(pSeq) || checkIfRunning(pSeq)) {
             System.err.println("\nAlready playing " + pSeq.toString());
             return;
         }
         asSeqChanRunning[pSeq.getSeqChan()-SEQACHAN] = true;
-        soCurrentSeqs.add(pSeq);
+        stCurrentSeqs.add(pSeq);
         System.err.println("\nPlaying " + pSeq.toString());
         //Create the sequence thread that runs through the sequence
         new Thread() {
@@ -377,7 +379,7 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
                 temp = (SeqNode)pSeq.getNext();
                 delay = temp.getTick() - previousTick;
                 //Delay if possible by current percision
-                if (delay > soDelay)    doSleep(delay);
+                if (delay > stDelay)    doSleep(delay);
                 //Adjust the last tick before activating the next note
                 previousTick = temp.getTick();
               } while (orig.getTick() != temp.getTick() && asReading == true);
@@ -387,11 +389,11 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
                 return;
               }
               //After sequence is over, do another delay
-              if (delay > soDelay)  doSleep(delay);
+              if (delay > stDelay)  doSleep(delay);
               //Then reset and load it again
               pSeq.reset();
               //Once it's all done, check if it's still present
-              running = soCurrentSeqs.contains(pSeq);
+              running = stCurrentSeqs.contains(pSeq);
               //If it is still present, run through again
             } while (running == true && asReading == true);
             //Check yet again to avoid any unnecessary variable creation
@@ -417,12 +419,12 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
 /** Activates whenever notes are played, handles notes
   */
     protected void playNotes() {
-        for (Note n : soNotesPressed.values()) {
-            if(soCurrentNotes.contains(n)) {
+        for (Note n : stNotesPressed.values()) {
+            if(stCurrentNotes.contains(n)) {
                 System.err.print(","); //if playing, do not restart note
                 return;
             }
-            soCurrentNotes.add(n);
+            stCurrentNotes.add(n);
             final Note nT = new Note(n);
             if (asReading == false)
                 return;
@@ -437,8 +439,8 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
                     //if the note is safe, play it
                     if (checkIfIntIsSafe(adjusted, nT)) {
                         asChannels[nT.getChan()].noteOn(adjusted, nT.getVel());
-                        while(soCurrentNotes.contains(nT)) {
-                            doSleep(soDelay);
+                        while(stCurrentNotes.contains(nT)) {
+                            doSleep(stDelay);
                             if (asReading == false) {
                                 this.interrupt();
                                 break;
@@ -459,7 +461,7 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
   */
     private synchronized int adjustNoteInt(Note note) {
         if (note.getOctS() == LEFTOCTAVE)
-            return note.getInt() + 12*soLeftOct;
+            return note.getInt() + 12*stLeftOct;
         else
             return note.getInt();
     }
@@ -476,8 +478,8 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
         if (value <= 96 || asSafeMode == false)
             return true;
         //Otherwise...
-        soNotesPressed.clear();
-        soSynSysPressed.clear();
+        stNotesPressed.clear();
+        stSynSysPressed.clear();
         JOptionPane.showMessageDialog(asComponent,
             "The synthesizer has attempted to play a note at a pitch that "
           + "can potentially be dangerous to the human ear.\n"
@@ -500,7 +502,7 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
                 break;
             case SETVOL: case SETMODPITCH: case SETPITCHBEND:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 ctrlValue(ss.getSSChans(), ss.getSSID(), ss.getSSVal());
                 break;
             case GLOBALDECRVOL: case GLOBALCRESVOL:
@@ -510,56 +512,56 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
                 break;
             case GLOBALSETVOL: case GLOBALSETMODPITCH: case GLOBALSETPITCHBEND:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 ctrlValue(ALLCHAN, ss.getSSID(), ss.getSSVal());
                 break;
             case TOGGLESUSTAIN:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 toggleSustain(ss.getSSChans());
                 break;
             //global set sustain
             case GLOBALTOGGLESUSTAIN:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 toggleSustain(ALLCHAN);
                 break;
             case TOGGLEMONO:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 toggleMono(ss.getSSChans());
                 break;
             case GLOBALTOGGLEMONO:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 toggleMono(ALLCHAN);
                 break;
             case TOGGLESOLO:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 toggleSolo(ss.getSSChans());
                 break;
             case GLOBALTOGGLESOLO:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 toggleSolo(ALLCHAN);
                 break;
             //lowering left octave
             case LEFTDOWNOCTAVE:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
-                octaveLeftSet(this.soLeftOct-1);
+                    stCurrentSynSys.add(ss);
+                octaveLeftSet(this.stLeftOct-1);
                 break;
             //raising left octave
             case LEFTUPOCTAVE:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
-                octaveLeftSet(this.soLeftOct+1);
+                    stCurrentSynSys.add(ss);
+                octaveLeftSet(this.stLeftOct+1);
                 break;
             //change program
             case CHANGEPROGRAM:
                 if (fromKeyboard && !(ss instanceof SynthSysNode)) {
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                     programSet(ss.getSSChans(), ss.getSSVals());
                 } else if  (!fromKeyboard && !(ss instanceof SynthSysNode)) {
                     programSet(ss.getSSChans(), ss.getSSVals());
@@ -576,26 +578,26 @@ public class SynthTwo extends AbstractSynth implements ActionListener {
             //global change program
             case GLOBALCHANGEPROGRAM:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 programSet(ALLCHAN, ss.getSSVal());
                 break;
             //Reset channel
             case RESETCHANNEL:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 ctrlSet(ss.getSSChans(), CTRLCH_CTRLOFF, CTRLCH_CTRLOFF);
                 ctrlSet(ss.getSSChans(), CTRLCH_VOL, 100);
                 break;
             //Halt all sound on specified channels
             case HALTCHANNEL:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 ctrlSet(ss.getSSChans(), CTRLCH_NOTEOFF, CTRLCH_NOTEOFF);
                 break;
             //Halting all sound
             case HALTALLSYNTH: default:
                 if (fromKeyboard)
-                    soCurrentSynSys.add(ss);
+                    stCurrentSynSys.add(ss);
                 asReading = !asReading;
                 System.err.println("Sound Halted = " + asReading);
                 if (asReading == false) {
